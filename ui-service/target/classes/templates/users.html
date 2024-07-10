@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Users page</title>
+</head>
+<body>
+<a href="http://localhost:8585/ui/home">Главная страница</a><br>
+<h1>Users list</h1><br>
+<ul>
+    <li th:each="user : ${users}" th:text="${user.getName()}"></li>
+</ul>
+</body>
+</html>
