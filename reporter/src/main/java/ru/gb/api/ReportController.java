@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import ru.gb.model.Group;
 import ru.gb.model.Report;
+import ru.gb.model.User;
 import ru.gb.repository.ReportRepository;
 
 import java.util.List;
@@ -31,19 +32,34 @@ public class ReportController {
 
     @PostMapping
     @Operation(summary = "create report", description = "Создать отчет")
-    public Report addReport (@RequestBody Report report) {
-        return reportRepository.save(report);
+    public Report addReport (@RequestBody List<User> users) {
+        Report report = new Report(users);
+        try {
+            for (User user : users) {
+                user.getReports().add(report);
+            }
+            System.out.println(report);
+            System.out.println(report.getUsers().size());
+            for (User user : report.getUsers()) {
+                System.out.println(user);
+            }
+            reportRepository.save(report);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return report;
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "get user by id", description = "Получить пользователя по его ID")
-    public Report getUserById (@PathVariable Long id) {
+    @Operation(summary = "get report by id", description = "Получить отчёт по ID")
+    public Report getReportById (@PathVariable Long id) {
         return reportRepository.findById(id).get();
     }
 
     @GetMapping("/group/{groupName}")
-    @Operation(summary = "get report by group", description = "Получить отчет по группе")
-    public Optional<Report> getUserByGroup (@PathVariable String groupName) {
+    @Operation(summary = "get report by group", description = "Получить отчет по названию группы")
+    public Optional<Report> getReportByGroup (@PathVariable String groupName) {
         Group group = Objects.requireNonNull(webClient.get()
                         .uri("http://user-service/group/name/{groupName}", groupName)
                         .retrieve()
@@ -55,7 +71,7 @@ public class ReportController {
 
     @GetMapping()
     @Operation(summary = "get all reports", description = "Получить список всех отчетов")
-    public List<Report> getAllUsers () {
+    public List<Report> getAllReports () {
         return reportRepository.findAll();
     }
 

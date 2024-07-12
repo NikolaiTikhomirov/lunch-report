@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Data
@@ -18,7 +20,7 @@ public class SimpleUser {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Schema(name = "Идентификатор")
-  private final long id;
+  private final Long id;
 
   @Column(name = "name")
   @Schema(name = "Имя")
@@ -26,6 +28,9 @@ public class SimpleUser {
 
   @Column(name = "role")
   private final String role;
+
+//  @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//  private final List<User> lunch;
 
 
   public SimpleUser() {
