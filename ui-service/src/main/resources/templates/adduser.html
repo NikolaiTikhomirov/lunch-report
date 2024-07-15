@@ -4,11 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, fakeUser-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Add User page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Add user page</title>
 </head>
 <body>
-<a href="http://localhost:8585/ui/home">Главная страница</a><br>
-<h1>Add User</h1><br>
+    <a href="http://localhost:8585/ui/home">Главная страница</a><br>
+    <h1>Add User</h1><br>
+    <form action="#" th:action="@{/ui/adduser}" th:object="${user}" method="post">
+<!--        <p>Id: <input type="text" th:field="*{id}" /></p>-->
+        <p>Name: <input type="text" th:field="*{name}" /></p>
+<!--        <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>-->
+<!--        <p>Login: <input type="text" th:field="*{login}" /></p>-->
+<!--        <p>Password: <input type="text" th:field="*{password}" /></p>-->
+        <p>Role: <input type="text" th:field="*{role}" /></p>
+<!--        <p>Group: <input type="text" th:field="*{group}" /></p>-->
+<!--        <p>Reports: <input type="text" th:field="*{reports}" /></p>-->
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
 </body>
 </html>

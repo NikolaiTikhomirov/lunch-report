@@ -29,47 +29,67 @@ public class User {
 
   @Column(name = "name")
   @Schema(name = "Имя")
-  private final String name;
+  private String name;
 
   @Column(name = "login")
-  private final String login;
+  private String login;
 
   @Column(name = "password")
-  private final String password;
+  private String password;
 
   @Column(name = "role")
-  private final String role;
+  private String role;
 
   @JsonBackReference
   @ManyToOne
   @JoinColumn(name = "group_id")
-  private final Group group;
+  private Group group;
 
   @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JsonIgnore
   @JoinTable(name="users_reports",
           joinColumns=  @JoinColumn(name="user_id", referencedColumnName="id"),
           inverseJoinColumns= @JoinColumn(name="report_id", referencedColumnName="report_id") )
-  private final List<Report> reports;
+  private List<Report> reports;
 
   public User() {
-    this(sequence++, "unknown", "unknown", "unknown", "unknown", null, new ArrayList<>());
+    this.id = sequence++;
+    this.name = "unknown";
+    this.login = "unknown";
+    this.password = "unknown";
+    this.role = "unknown";
+    this.group = null;
+    this.reports = new ArrayList<>();
   }
 
   public User(String name) {
-    this(sequence++, name, name, name, name, null, new ArrayList<>());
+    this.id = sequence++;
+    this.name = name;
+    this.login = name;
+    this.password = name;
+    this.role = name;
+    this.group = null;
+    this.reports = new ArrayList<>();
   }
 
   public User(String name, String role, Group group) {
-    this(sequence++, name, name, name, role, group, new ArrayList<>());
+    this.id = sequence++;
+    this.name = name;
+    this.login = name;
+    this.password = name;
+    this.role = role;
+    this.group = group;
+    this.reports = new ArrayList<>();
   }
 
   public User(String name, String login, String password, String role, Group group, List<Report> reports) {
-    this(sequence++, name, login, password, role, group, reports);
+    this.id = sequence++;
+    this.name = name;
+    this.login = login;
+    this.password = password;
+    this.role = role;
+    this.group = group;
+    this.reports = reports;
   }
-
-//  public User(Long id, String name, String login, String password, String role, Group group, Boolean lunch) {
-//    this(id, name, login, password, role, group, lunch);
-//  }
 
 }
