@@ -17,6 +17,23 @@
 <!--        <p>Login: <input type="text" th:field="*{login}" /></p>-->
 <!--        <p>Password: <input type="text" th:field="*{password}" /></p>-->
         <p>Role: <input type="text" th:field="*{role}" /></p>
+
+        <div>
+            <label>User: </label>
+            <select th:field="*{groupName}">
+                <option th:each="group: ${groups}" th:value="${group.name}" th:text="${group.name}"></option>
+            </select>
+        </div>
+
+
+<!--        <select th:field="*{group}">-->
+<!--            <option th:each="group : ${groups}"-->
+<!--                    th:value="${group}"-->
+<!--                    th:text="${group.getName()}">-->
+<!--            </option>-->
+<!--        </select>-->
+
+
 <!--        <p>Group: <input type="text" th:field="*{group}" /></p>-->
 <!--        <p>Reports: <input type="text" th:field="*{reports}" /></p>-->
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>

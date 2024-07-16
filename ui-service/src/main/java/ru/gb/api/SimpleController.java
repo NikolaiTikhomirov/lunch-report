@@ -1,5 +1,6 @@
 package ru.gb.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
+import ru.gb.model.Group;
 import ru.gb.model.SimpleUser;
 import ru.gb.model.User;
 
@@ -42,54 +44,50 @@ public class SimpleController {
 
     @GetMapping("/home")
     public String getHomePage (Model model) {
-//        model.addAttribute("home");
         return "home";
     }
 
     @GetMapping("/addreport")
     public String addReportPage (Model model) {
-//        model.addAttribute("addReportPage");
         return "addreport";
     }
 
     @GetMapping("/reports")
     public String reportsPage (Model model) {
-//        model.addAttribute("reportsPage");
         return "reports";
     }
 
     @GetMapping("/adduser")
     public String addUserPage (Model model) {
+        List<Group> groups = Objects.requireNonNull(webClient.get()
+                        .uri("http://user-service/group")
+                        .retrieve()
+                        .toEntityList(Group.class)
+                        .block())
+                .getBody();
+        model.addAttribute("groups", groups);
         model.addAttribute("user", new User());
+//        model.addAttribute("om", new ObjectMapper());
         return "adduser";
     }
 
     @PostMapping("/adduser")
     public String addUser (@ModelAttribute User user, BindingResult result, Model model) {
-
-        System.out.println("ну наконец то");
-        System.out.println(user);
-
         if (result.hasErrors()) {
-            System.out.println(result.getAllErrors());
             for (ObjectError error : result.getAllErrors()) {
                 System.out.println(error);
-                System.out.println(error.toString());
             }
             model.addAttribute("adduserfail", result.getAllErrors());
             return "adduserfail";
         }
         try {
-            User user1 = webClient.post()
+            User finalUser = webClient.post()
                     .uri("http://user-service/user")
                     .bodyValue(user)
                     .retrieve()
                     .bodyToMono(User.class)
                     .block();
-
-            System.out.println(user1);
-
-            model.addAttribute("user", user1);
+            model.addAttribute("user", finalUser);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -99,7 +97,6 @@ public class SimpleController {
 
     @GetMapping("/addgroup")
     public String addGroupPage (Model model) {
-//        model.addAttribute("addGroupPage");
         return "addgroup";
     }
 }

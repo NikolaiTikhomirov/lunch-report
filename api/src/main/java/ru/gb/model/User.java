@@ -45,6 +45,8 @@ public class User {
   @JoinColumn(name = "group_id")
   private Group group;
 
+  private String groupName;
+
   @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JsonIgnore
   @JoinTable(name="users_reports",
