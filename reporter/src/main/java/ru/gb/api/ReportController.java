@@ -32,23 +32,8 @@ public class ReportController {
 
     @PostMapping
     @Operation(summary = "create report", description = "Создать отчет")
-    public Report addReport (@RequestBody List<User> users) {
-        Report report = new Report(users);
-        try {
-            for (User user : users) {
-                user.getReports().add(report);
-            }
-            System.out.println(report);
-            System.out.println(report.getUsers().size());
-            for (User user : report.getUsers()) {
-                System.out.println(user);
-            }
-            reportRepository.save(report);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
-        return report;
+    public Report addReport (@RequestBody Report report) {
+        return reportRepository.save(report);
     }
 
     @GetMapping("/{id}")

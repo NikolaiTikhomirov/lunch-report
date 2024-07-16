@@ -8,7 +8,44 @@
     <title>Add report page</title>
 </head>
 <body>
-<a href="http://localhost:8585/ui/home">Главная страница</a><br>
-<h1>Add report</h1><br>
+    <a href="http://localhost:8585/ui/home">Главная страница</a><br>
+    <h1>Add report</h1><br>
+    <form action="#" th:action="@{/ui/addreport}" th:object="${report}" method="post">
+<!--            <label>User: </label>-->
+<!--            <select th:field="*{users}">-->
+<!--                <option th:each="user: ${users}" th:value="${user.name}" th:text="${user.name}"></option>-->
+<!--            </select>-->
+
+<!--        <select th:field="*{users}">-->
+
+<!--            <option th:each="user : ${users}"-->
+<!--                    th:value="${user}"-->
+<!--                    th:text="${user.name}"></option>-->
+<!--        </select>-->
+
+<!--        <div class="controls">-->
+<!--            <select class="form-control" name="example" id="example">-->
+<!--                <option value="0">ALL</option>-->
+<!--                <option th:each="user : ${users}"-->
+<!--                        th:value="${user}"-->
+<!--                        th:selected="${user.isSelected(lastselected)}"-->
+<!--                        th:text="${user.name}">-->
+<!--                </option>-->
+<!--            </select>-->
+<!--        </div>-->
+
+        <p>
+            <label>Users:
+                <input type="checkbox" name="users"
+                       th:each="user : ${users}"
+                       th:text="${user.name}"
+                       th:value="${user.name}"
+                       th:field="*{usersNames}"
+                />
+            </label>
+        </p>
+
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
 </body>
 </html>

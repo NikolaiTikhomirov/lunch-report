@@ -10,5 +10,8 @@
 <body>
 <a href="http://localhost:8585/ui/home">Главная страница</a><br>
 <h1>Reports list</h1><br>
+<ul>
+    <li th:each="report : ${reports}" th:text="${report}"></li>
+</ul>
 </body>
 </html>

@@ -1,7 +1,6 @@
 package ru.gb.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -28,17 +27,18 @@ public class Report {
     @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "group_id")
-    private final Group group;
+    private Group group;
 
     @Column(name = "date")
     @Schema(name = "Дата отчета")
-    private final LocalDateTime date;
+    private LocalDateTime date;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name="users_reports",
             joinColumns = @JoinColumn(name="report_id", referencedColumnName="report_id"),
             inverseJoinColumns = @JoinColumn(name="user_id", referencedColumnName="id") )
-    private final List<User> users;
+    private List<User> users;
+    private List<String> usersNames;
 
     public Report() {
         this.id = sequence++;

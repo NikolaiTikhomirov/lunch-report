@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import ru.gb.model.Group;
+import ru.gb.model.User;
 import ru.gb.repository.GroupRepository;
 
 import java.util.List;
@@ -36,6 +37,12 @@ public class GroupController {
     @Operation(summary = "get group by name", description = "Получить группу по его имени")
     public Optional<Group> getGroupByName (@PathVariable String name) {
         return groupRepository.findByName(name);
+    }
+
+    @GetMapping("/users/{groupName}")
+    @Operation(summary = "get users by group name", description = "Получить пользователей по группе")
+    public List<User> getUsersByGroupName (@PathVariable String groupName) {
+        return groupRepository.findByName(groupName).get().getUsers();
     }
 
     @GetMapping()

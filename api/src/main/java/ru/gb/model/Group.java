@@ -21,21 +21,21 @@ public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Schema(name = "Идентификатор")
-    private final Long id;
+    private Long id;
 
     @Column(name = "название класса")
-    private final String name;
+    private String name;
 
     @Column(name = "год обучения")
-    private final String studyYear;
+    private String studyYear;
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "group")
-    private final List<User> users;
+    private List<User> users;
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "group")
-    private final List<Report> reports;
+    private List<Report> reports;
 
     public Group() {
         this.id = sequence++;
@@ -55,6 +55,14 @@ public class Group {
 
     public Group(String name, String studyYear, List<User> users, List<Report> reports) {
         this.id = sequence++;
+        this.name = name;
+        this.studyYear = studyYear;
+        this.users = users;
+        this.reports = reports;
+    }
+
+    public Group(Long id, String name, String studyYear, List<User> users, List<Report> reports) {
+        this.id = id;
         this.name = name;
         this.studyYear = studyYear;
         this.users = users;

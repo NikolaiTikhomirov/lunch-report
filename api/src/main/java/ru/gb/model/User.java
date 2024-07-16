@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import java.util.List;
 @Table(name = "users")
 @Data
 @ToString(exclude = "reports")
-@RequiredArgsConstructor
 @Schema(name = "Пользователь")
 public class User {
 
@@ -25,7 +23,7 @@ public class User {
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Schema(name = "Идентификатор")
-  private final Long id;
+  private Long id;
 
   @Column(name = "name")
   @Schema(name = "Имя")
@@ -86,6 +84,16 @@ public class User {
 
   public User(String name, String login, String password, String role, Group group, List<Report> reports) {
     this.id = sequence++;
+    this.name = name;
+    this.login = login;
+    this.password = password;
+    this.role = role;
+    this.group = group;
+    this.reports = reports;
+  }
+
+  public User(Long id, String name, String login, String password, String role, Group group, List<Report> reports) {
+    this.id = id;
     this.name = name;
     this.login = login;
     this.password = password;
